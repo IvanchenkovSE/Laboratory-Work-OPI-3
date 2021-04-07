@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdio.h>
 
 using namespace std;
 
@@ -47,19 +48,57 @@ int main()
     string secondLine;
 
     switch(select){
+        case 10:{
+
+            union ticks{
+                unsigned long long t64;
+                struct s32 { long th, tl; } t32;
+                } start, end;
+            double cpu_Hz = 3200000000ULL; // for 3.2 GHz CPU
+            asm("rdtsc\n":"=a"(start.t32.th),"=d"(start.t32.tl));
+
+
+            firstLine = anySizeStringGenerator(5);
+            secondLine = anySizeStringGenerator(5);
+
+
+            asm("rdtsc\n":"=a"(end.t32.th),"=d"(end.t32.tl));
+            printf("Time taken: %lf sec.\n", (end.t64-start.t64)/cpu_Hz);
+            break;
+        }
+        case 30:{
+
+            union ticks{
+                unsigned long long t64;
+                struct s32 { long th, tl; } t32;
+            } start, end;
+            double cpu_Hz = 3200000000ULL; // for 3.2 GHz CPU
+            asm("rdtsc\n":"=a"(start.t32.th),"=d"(start.t32.tl));
+
+            firstLine = anySizeStringGenerator(15);
+            secondLine = anySizeStringGenerator(15);
+
+
+
+            asm("rdtsc\n":"=a"(end.t32.th),"=d"(end.t32.tl));
+            printf("Time taken: %lf sec.\n", (end.t64-start.t64)/cpu_Hz);
+            break;
+        }
         case 50:{
+
+            union ticks{
+                unsigned long long t64;
+                struct s32 { long th, tl; } t32;
+            } start, end;
+            double cpu_Hz = 3200000000ULL; // for 3.2 GHz CPU
+            asm("rdtsc\n":"=a"(start.t32.th),"=d"(start.t32.tl));
+
             firstLine = anySizeStringGenerator(25);
             secondLine = anySizeStringGenerator(25);
-            break;
-        }
-        case 500:{
-            firstLine = anySizeStringGenerator(250);
-            secondLine = anySizeStringGenerator(250);
-            break;
-        }
-        case 1000:{
-            firstLine = anySizeStringGenerator(500);
-            secondLine = anySizeStringGenerator(500);
+
+
+            asm("rdtsc\n":"=a"(end.t32.th),"=d"(end.t32.tl));
+            printf("Time taken: %lf sec.\n", (end.t64-start.t64)/cpu_Hz);
             break;
         }
         default:{
